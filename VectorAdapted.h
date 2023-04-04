@@ -17,6 +17,7 @@ public:
 public:
 	constexpr VectorAdapted() : container_{} {}
 	constexpr VectorAdapted(std::initializer_list<value_type> init) : container_{ init } {}
+	constexpr VectorAdapted(const VectorAdapted&) = default;
 	constexpr VectorAdapted(VectorAdapted&& container) noexcept :
 		container_{ std::move(container.container_) } {}
 	~VectorAdapted() override = default;

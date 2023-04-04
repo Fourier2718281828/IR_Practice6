@@ -13,8 +13,11 @@ public:
 	CompressedIndexer(const CompressibleIndexer& indexer) :
 		lexems_{},
 		pointers_{},
-		block_size_(2)
+		indices_{},
+		block_size_(5)
 	{
+		//lexems_.reserve(7 * indexer.size());
+		indices_.reserve(indexer.size());
 		pointers_.push_back(0);
 		compress_from(indexer);
 	}
@@ -22,6 +25,14 @@ public:
 	
 
 private:
+
+	void copy_indices(const CompressibleIndexer& indexer) const
+	{
+		for (const auto& [_, list] : indexer.get_dict())
+		{
+			//indices_.emplace_back(list);
+		}
+	}
 
 	void compress_from(const CompressibleIndexer& indexer) const
 	{
@@ -35,6 +46,11 @@ private:
 				add_block(words);
 				words.clear();
 			}
+		}
+		if (!words.empty())
+		{
+			add_block(words);
+			words.clear();
 		}
 	}
 
@@ -54,6 +70,7 @@ private:
 private:
 	mutable std::string lexems_;
 	mutable std::vector<size_t> pointers_;
+	mutable std::vector<VectorAdapted<size_t>> indices_;
 	const size_t block_size_;
 };
 

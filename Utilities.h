@@ -282,6 +282,10 @@ std::string common_prefix(const std::vector<std::string>& strs) {
 	{
 		return prefix;
 	}
+	if (strs.size() == 1)
+	{
+		return strs[0];
+	}
 	int i = 0;
 	while (true) 
 	{
